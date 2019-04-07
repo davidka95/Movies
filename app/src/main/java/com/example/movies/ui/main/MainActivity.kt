@@ -8,6 +8,7 @@ import com.example.movies.R
 import com.example.movies.model.Movie
 import com.example.movies.ui.editMovie.EditMovieActivity
 import com.example.movies.ui.injector
+import com.example.movies.ui.movieDetails.MovieDetailsActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
@@ -40,7 +41,9 @@ class MainActivity : AppCompatActivity(), MainScreen {
     }
 
     override fun showMovieDetails(movieId: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val intent = Intent(this, MovieDetailsActivity::class.java)
+        //TODO: Put movie extra as parcelable
+        startActivity(intent)
     }
 
     override fun showCreateMovie() {
