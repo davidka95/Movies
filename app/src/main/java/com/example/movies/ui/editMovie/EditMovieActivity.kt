@@ -48,10 +48,23 @@ class EditMovieActivity : AppCompatActivity(), EditMovieScreen {
 
             override fun afterTextChanged(s: Editable) {}
         })
+
+        fabSaveMovie.setOnClickListener { editMoviePresenter.saveMovie() }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        editMoviePresenter.attachScreen(this)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        editMoviePresenter.detachScreen()
     }
 
     override fun showMovieSaved(movie: Movie) {
         Toast.makeText(this, "Movie is saved", Toast.LENGTH_SHORT).show()
+        finish()
     }
 
     override fun showError(error: String) {

@@ -1,5 +1,6 @@
 package com.example.movies.ui.editMovie
 
+import android.util.Log
 import com.example.movies.interactor.movies.MoviesInteractor
 import com.example.movies.interactor.movies.events.AddMovieEvent
 import com.example.movies.interactor.movies.events.UpdateMovieEvent
@@ -31,20 +32,24 @@ class EditMoviePresenter @Inject constructor(private val moviesInteractor: Movie
     fun setMovie(movie: Movie) {
         this.movie.id = movie.id
         updateTitle(movie.title ?: "")
+        screen?.updateTitleTextView(this.movie.title!!)
         updateReleaseDate(movie.releaseDate ?: Date())
+        screen?.updateReleaseDatePicker(this.movie.releaseDate!!)
         updateDescription(movie.description ?: "")
+        screen?.updateDescriptionTextView(this.movie.description!!)
+
     }
 
     fun updateTitle(title: String) {
-        screen?.updateTitleTextView(title)
+        movie.title = title
     }
 
     fun updateReleaseDate(date: Date) {
-        screen?.updateReleaseDatePicker(date)
+        movie.releaseDate = date
     }
 
     fun updateDescription(description: String) {
-        screen?.updateDescriptionTextView(description)
+        movie.description = description
     }
 
     fun saveMovie() {
@@ -57,11 +62,13 @@ class EditMoviePresenter @Inject constructor(private val moviesInteractor: Movie
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onAddMovieEventMainThread(event: AddMovieEvent) {
+        Log.d("EVENT", "addMovieEvent")
         screen?.showMovieSaved(movie)
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onEditMovieEvent(event: UpdateMovieEvent) {
+        Log.d("EVENT", "createMovieEvent")
         screen?.showMovieSaved(movie)
     }
 
