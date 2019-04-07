@@ -1,6 +1,7 @@
 package com.example.movies.ui
 
 import android.content.Context
+import com.example.movies.interactor.movies.MoviesInteractor
 import com.example.movies.ui.main.MainPresenter
 import dagger.Module
 import dagger.Provides
@@ -14,5 +15,5 @@ class UIModule(private val context: Context) {
 
     @Provides
     @Singleton
-    fun mainPresenter() = MainPresenter()
+    fun mainPresenter(moviesInteractor: MoviesInteractor) = MainPresenter(moviesInteractor)
 }
