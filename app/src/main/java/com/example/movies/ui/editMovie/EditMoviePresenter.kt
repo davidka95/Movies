@@ -31,12 +31,12 @@ class EditMoviePresenter @Inject constructor(private val moviesInteractor: Movie
 
     fun setMovie(movie: Movie) {
         this.movie.id = movie.id
-        updateTitle(movie.title ?: "")
-        screen?.updateTitleTextView(this.movie.title!!)
+        updateTitle(movie.title)
+        screen?.updateTitleTextView(this.movie.title)
         updateReleaseDate(movie.releaseDate ?: Date())
         screen?.updateReleaseDatePicker(this.movie.releaseDate!!)
-        updateDescription(movie.description ?: "")
-        screen?.updateDescriptionTextView(this.movie.description!!)
+        updateDescription(movie.description)
+        screen?.updateDescriptionTextView(this.movie.description)
 
     }
 

@@ -10,7 +10,7 @@ import org.greenrobot.eventbus.ThreadMode
 import java.util.concurrent.Executor
 import javax.inject.Inject
 
-class MainPresenter @Inject constructor(private val moviesInteractor: MoviesInteractor): Presenter<MainScreen>() {
+class MainPresenter @Inject constructor(private val executor: Executor, private val moviesInteractor: MoviesInteractor): Presenter<MainScreen>() {
 
     fun showMovieDetails(movieId: Int) {
         screen?.showMovieDetails(movieId)
@@ -32,7 +32,9 @@ class MainPresenter @Inject constructor(private val moviesInteractor: MoviesInte
     }
 
     fun refreshMoviesList() {
-        moviesInteractor.getMovies()
+        executor.execute {
+            moviesInteractor.getMovies()
+        }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

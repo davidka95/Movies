@@ -1,11 +1,17 @@
 package com.example.movies.model
 
+import com.google.gson.annotations.SerializedName
 import java.util.*
 
 data class Movie(
-    var id: String? = null,
-    var title: String? = null,
-    var imageUrl: String? = null,
-    var releaseDate: Date? = null,
-    var description: String? = null
+    @SerializedName("id")
+    var id: Int? = null,
+    @SerializedName("title")
+    var title: String = "",
+    @SerializedName("descripition")
+    var description:String = "",
+    @SerializedName("imageBase64")
+    var imageBase64:String = "",
+    @SerializedName("releaseDate")
+    var releaseDate:Date? = null
 )

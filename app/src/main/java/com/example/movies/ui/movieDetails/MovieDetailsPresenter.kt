@@ -26,7 +26,7 @@ class MovieDetailsPresenter @Inject constructor(private val moviesInteractor: Mo
     private fun updateScreen(movie: Movie) {
         screen?.updateDescriptionTextView(movie.description ?: "")
         screen?.updateTitleTextView(movie.title?: "")
-        screen?.updateImage(movie.imageUrl?: "")
+        screen?.updateImage(movie.imageBase64?: "")
         screen?.updateReleaseDate(movie.releaseDate?.toString()?: "")
     }
 
