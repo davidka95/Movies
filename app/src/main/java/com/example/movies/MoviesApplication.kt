@@ -1,6 +1,7 @@
 package com.example.movies
 
 import android.app.Application
+import com.example.movies.database.DatabaseModule
 import com.example.movies.ui.UIModule
 
 class MoviesApplication: Application() {
@@ -8,6 +9,6 @@ class MoviesApplication: Application() {
 
     override fun onCreate() {
         super.onCreate()
-        injector = DaggerMoviesApplicationComponent.builder().uIModule(UIModule(this)).build()
+        injector = DaggerMoviesApplicationComponent.builder().uIModule(UIModule(this)).databaseModule(DatabaseModule(this)).build()
     }
 }

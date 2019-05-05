@@ -33,7 +33,7 @@ class EditMoviePresenter @Inject constructor(private val moviesInteractor: Movie
         this.movie.id = movie.id
         updateTitle(movie.title)
         screen?.updateTitleTextView(this.movie.title)
-        updateReleaseDate(movie.releaseDate ?: Date())
+        updateReleaseDate(movie.releaseDate ?: 0)
         screen?.updateReleaseDatePicker(this.movie.releaseDate!!)
         updateDescription(movie.description)
         screen?.updateDescriptionTextView(this.movie.description)
@@ -44,7 +44,7 @@ class EditMoviePresenter @Inject constructor(private val moviesInteractor: Movie
         movie.title = title
     }
 
-    fun updateReleaseDate(date: Date) {
+    fun updateReleaseDate(date: Int) {
         movie.releaseDate = date
     }
 

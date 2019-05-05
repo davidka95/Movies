@@ -13,5 +13,5 @@ data class Movie(
     @SerializedName("imageBase64")
     var imageBase64:String = "",
     @SerializedName("releaseDate")
-    var releaseDate:Date? = null
+    var releaseDate:Int? = null
 )

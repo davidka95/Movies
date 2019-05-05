@@ -1,6 +1,7 @@
 package com.example.movies.interactor.movies
 
 import android.util.Log
+import com.example.movies.database.MovieDAO
 import com.example.movies.interactor.movies.events.AddMovieEvent
 import com.example.movies.interactor.movies.events.DeleteMovieEvent
 import com.example.movies.interactor.movies.events.GetMoviesEvent
@@ -8,10 +9,13 @@ import com.example.movies.interactor.movies.events.UpdateMovieEvent
 import com.example.movies.model.CreateMovieDto
 import com.example.movies.model.Movie
 import com.example.movies.network.MoviesApi
+import com.google.gson.Gson
 import org.greenrobot.eventbus.EventBus
 import javax.inject.Inject
 
-class MoviesInteractor @Inject constructor(private var moviesApi: MoviesApi) {
+class MoviesInteractor @Inject constructor(private var moviesApi: MoviesApi, private var movieDAO: MovieDAO) {
+
+
     fun getMovies() {
         val event = GetMoviesEvent()
         try {
@@ -87,5 +91,20 @@ class MoviesInteractor @Inject constructor(private var moviesApi: MoviesApi) {
             event.throwable = e
             EventBus.getDefault().post(event)
         }
+    }
+
+    fun saveMovie(movie: Movie) {
+
+        movieDAO.insertMovie(com.example.movies.database.Movie(
+            movieId = movie.id,
+            imageBase64 = movie.imageBase64,
+            title = movie.title,
+            description = movie.description,
+            releaseDate = movie.releaseDate
+        ))
+    }
+
+    fun removeSavedMovie(movieId: Int) {
+        movieDAO.deleteMovie(movieId)
     }
 }

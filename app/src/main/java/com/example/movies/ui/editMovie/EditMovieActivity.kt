@@ -75,7 +75,7 @@ class EditMovieActivity : AppCompatActivity(), EditMovieScreen {
         etTitle.text = title.toEditable()
     }
 
-    override fun updateReleaseDatePicker(releaseDate: Date) {
+    override fun updateReleaseDatePicker(releaseDate: Int) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 

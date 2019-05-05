@@ -7,6 +7,6 @@ interface EditMovieScreen {
     fun showMovieSaved(movie: Movie)
     fun showError(error: String)
     fun updateTitleTextView(title: String)
-    fun updateReleaseDatePicker(releaseDate: Date)
+    fun updateReleaseDatePicker(releaseDate: Int)
     fun updateDescriptionTextView(description: String)
 }
