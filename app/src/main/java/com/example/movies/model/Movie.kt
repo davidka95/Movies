@@ -1,6 +1,7 @@
 package com.example.movies.model
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 import java.util.*
 
 data class Movie(
@@ -14,4 +15,4 @@ data class Movie(
     var imageBase64:String = "",
     @SerializedName("releaseDate")
     var releaseDate:Int? = null
-)
+): Serializable

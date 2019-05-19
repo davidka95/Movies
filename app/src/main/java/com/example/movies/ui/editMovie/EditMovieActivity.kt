@@ -1,29 +1,16 @@
 package com.example.movies.ui.editMovie
 
-import android.app.DatePickerDialog
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
+import android.text.Editable
+import android.text.TextWatcher
 import android.widget.Toast
-import com.example.movies.R
+import com.example.movies.extensions.toEditable
 import com.example.movies.model.Movie
 import com.example.movies.ui.injector
 import com.example.movies.ui.main.EditMovieScreen
 import kotlinx.android.synthetic.main.activity_edit_movie.*
-import java.util.*
 import javax.inject.Inject
-import android.text.Editable
-import android.text.TextWatcher
-import android.view.View
-import com.example.movies.extensions.toEditable
-import com.example.movies.interactor.movies.events.AddMovieEvent
-import com.example.movies.interactor.movies.events.GetMoviesEvent
-import org.greenrobot.eventbus.Subscribe
-import org.greenrobot.eventbus.ThreadMode
-import android.widget.DatePicker
-
-
-
-
 
 
 class EditMovieActivity : AppCompatActivity(), EditMovieScreen {
@@ -35,6 +22,8 @@ class EditMovieActivity : AppCompatActivity(), EditMovieScreen {
         super.onCreate(savedInstanceState)
         setContentView(com.example.movies.R.layout.activity_edit_movie)
         injector.inject(this)
+
+
 
         etTitle.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
@@ -75,6 +64,10 @@ class EditMovieActivity : AppCompatActivity(), EditMovieScreen {
     override fun onStart() {
         super.onStart()
         editMoviePresenter.attachScreen(this)
+        val movie = intent.extras?.getSerializable("MOVIE_KEY") as? Movie
+        if (movie != null) {
+            editMoviePresenter.setMovie(movie)
+        }
     }
 
     override fun onStop() {

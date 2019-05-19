@@ -39,6 +39,9 @@ class MainPresenter @Inject constructor(private val executor: Executor, private 
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onEventMainThread(event: GetMoviesEvent) {
+
         screen?.showMovieList(event.movies ?: ArrayList())
+
+
     }
 }
