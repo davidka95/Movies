@@ -12,7 +12,7 @@ class MockDatabaseModule(context: Context) {
 
     @Singleton
     @Provides
-    internal fun providesMovieDAO(): MovieDAO {
+    internal fun providesMockMovieDAO(): MovieDAO {
         return MockMovieDAO()
     }
 

@@ -1,5 +1,6 @@
 package com.example.movies.ui.main
 
+import android.util.Log
 import com.example.movies.interactor.movies.MoviesInteractor
 import com.example.movies.interactor.movies.events.GetMoviesEvent
 import com.example.movies.model.Movie
@@ -39,7 +40,6 @@ class MainPresenter @Inject constructor(private val executor: Executor, private 
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onEventMainThread(event: GetMoviesEvent) {
-
         screen?.showMovieList(event.movies ?: ArrayList())
 
 
