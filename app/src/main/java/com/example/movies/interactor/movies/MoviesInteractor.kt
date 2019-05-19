@@ -2,10 +2,7 @@ package com.example.movies.interactor.movies
 
 import android.util.Log
 import com.example.movies.database.MovieDAO
-import com.example.movies.interactor.movies.events.AddMovieEvent
-import com.example.movies.interactor.movies.events.DeleteMovieEvent
-import com.example.movies.interactor.movies.events.GetMoviesEvent
-import com.example.movies.interactor.movies.events.UpdateMovieEvent
+import com.example.movies.interactor.movies.events.*
 import com.example.movies.model.CreateMovieDto
 import com.example.movies.model.Movie
 import com.example.movies.network.MoviesApi
@@ -106,5 +103,17 @@ class MoviesInteractor @Inject constructor(private var moviesApi: MoviesApi, pri
 
     fun removeSavedMovie(movieId: Int) {
         movieDAO.deleteMovie(movieId)
+    }
+
+    fun isMovieFavourite(movie: Movie) {
+        val event = FavoriteEvent()
+        event.isFavorite = true
+        val list = movieDAO.getMovie(movie.id!!)
+        Log.d("EVENT_DEBUG", list.size.toString())
+        if (list.isEmpty()) {
+            event.isFavorite = false
+        }
+
+        EventBus.getDefault().post(event)
     }
 }

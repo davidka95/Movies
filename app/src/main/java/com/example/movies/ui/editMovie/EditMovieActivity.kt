@@ -5,7 +5,10 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.Menu
+import android.view.MenuInflater
 import android.widget.Toast
+import com.example.movies.R
 import com.example.movies.extensions.toEditable
 import com.example.movies.model.Movie
 import com.example.movies.ui.injector

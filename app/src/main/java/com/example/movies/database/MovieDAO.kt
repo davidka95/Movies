@@ -17,4 +17,7 @@ interface MovieDAO {
     @Query("DELETE FROM movie where movieId == :id")
     fun deleteMovie(id: Int)
 
+    @Query("Select * FROM movie where movieId == :id")
+    fun getMovie(id: Int): List<Movie>
+
 }

@@ -6,14 +6,19 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Base64
 import android.util.Log
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import com.example.movies.R
 import com.example.movies.model.Movie
 import com.example.movies.ui.editMovie.EditMovieActivity
 import com.example.movies.ui.injector
+import kotlinx.android.synthetic.main.activity_edit_movie.*
 import kotlinx.android.synthetic.main.activity_movie_details.*
 import javax.inject.Inject
 
 class MovieDetailsActivity : AppCompatActivity(), MovieDetailsScreen {
+
     override fun updateTitleTextView(title: String) {
         tvTitle.text = title
     }
@@ -43,6 +48,33 @@ class MovieDetailsActivity : AppCompatActivity(), MovieDetailsScreen {
         startActivity(intent)
     }
 
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        val inflater: MenuInflater = menuInflater
+        inflater.inflate(R.menu.menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        // Handle item selection
+        return when (item.itemId) {
+            R.id.edit -> {
+                movieDetailsPresenter.editMovie()
+                true
+            }
+
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    override fun updateFavorite(isFavorite: Boolean) {
+        if (isFavorite) {
+            fabFavorite.setImageResource(R.drawable.ic_favorite)
+        } else {
+            fabFavorite.setImageResource(R.drawable.ic_favorite_border)
+        }
+
+    }
+
 
     @Inject
     lateinit var movieDetailsPresenter: MovieDetailsPresenter
@@ -50,8 +82,8 @@ class MovieDetailsActivity : AppCompatActivity(), MovieDetailsScreen {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_details)
-        btnEditMovie.setOnClickListener {
-            movieDetailsPresenter.editMovie()
+        fabFavorite.setOnClickListener {
+            movieDetailsPresenter.saveMovieOffline()
         }
         injector.inject(this)
 
