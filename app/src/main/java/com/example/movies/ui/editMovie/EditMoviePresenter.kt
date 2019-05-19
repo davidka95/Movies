@@ -88,7 +88,8 @@ class EditMoviePresenter @Inject constructor(private val executor: Executor,priv
             Log.d("Code", event.code.toString())
         }
         else {
-            screen?.showMovieSaved(movie)
+            screen?.showMovieEdited(movie)
+
         }
 
     }

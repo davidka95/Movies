@@ -5,6 +5,7 @@ import java.util.*
 
 interface EditMovieScreen {
     fun showMovieSaved(movie: Movie)
+    fun showMovieEdited(movie: Movie)
     fun showError(error: String)
     fun updateTitleTextView(title: String)
     fun updateReleaseDateTextView(date: String)

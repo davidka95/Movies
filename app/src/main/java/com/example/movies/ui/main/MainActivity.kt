@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity(), MainScreen {
         adapter = MoviesAdapter(this, displayedMovies)
         adapter?.setOnClickListener(object: ClickListener {
             override fun onItemClick(movie: Movie) {
-                val intent = Intent(this@MainActivity, EditMovieActivity::class.java)
+                val intent = Intent(this@MainActivity, MovieDetailsActivity::class.java)
                 intent.putExtra("MOVIE_KEY", movie)
                 startActivity(intent)
             }

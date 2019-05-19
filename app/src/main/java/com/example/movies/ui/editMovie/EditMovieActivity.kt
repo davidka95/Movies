@@ -1,5 +1,6 @@
 package com.example.movies.ui.editMovie
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.text.Editable
@@ -9,6 +10,7 @@ import com.example.movies.extensions.toEditable
 import com.example.movies.model.Movie
 import com.example.movies.ui.injector
 import com.example.movies.ui.main.EditMovieScreen
+import com.example.movies.ui.movieDetails.MovieDetailsActivity
 import kotlinx.android.synthetic.main.activity_edit_movie.*
 import javax.inject.Inject
 
@@ -78,6 +80,13 @@ class EditMovieActivity : AppCompatActivity(), EditMovieScreen {
     override fun showMovieSaved(movie: Movie) {
         Toast.makeText(this, "Movie is saved", Toast.LENGTH_SHORT).show()
         finish()
+    }
+
+    override fun showMovieEdited(movie: Movie) {
+        val intent = Intent(this, MovieDetailsActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        intent.putExtra("MOVIE_KEY", movie)
+        startActivity(intent)
     }
 
     override fun showError(error: String) {
