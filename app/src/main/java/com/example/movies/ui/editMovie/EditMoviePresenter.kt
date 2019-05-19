@@ -10,10 +10,15 @@ import com.example.movies.ui.main.EditMovieScreen
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import java.sql.Date
+import java.text.DateFormat
 import java.util.*
 import javax.inject.Inject
+import java.text.SimpleDateFormat
+import java.util.concurrent.Executor
 
-class EditMoviePresenter @Inject constructor(private val moviesInteractor: MoviesInteractor) :
+
+class EditMoviePresenter @Inject constructor(private val executor: Executor,private val moviesInteractor: MoviesInteractor) :
     Presenter<EditMovieScreen>() {
 
     private var movie = Movie()
@@ -33,8 +38,8 @@ class EditMoviePresenter @Inject constructor(private val moviesInteractor: Movie
         this.movie.id = movie.id
         updateTitle(movie.title)
         screen?.updateTitleTextView(this.movie.title)
-        updateReleaseDate(movie.releaseDate ?: 0)
-        screen?.updateReleaseDatePicker(this.movie.releaseDate!!)
+        movie.releaseDate = movie.releaseDate
+        screen?.updateReleaseDateTextView(movie.releaseDate.toString())
         updateDescription(movie.description)
         screen?.updateDescriptionTextView(this.movie.description)
 
@@ -44,8 +49,8 @@ class EditMoviePresenter @Inject constructor(private val moviesInteractor: Movie
         movie.title = title
     }
 
-    fun updateReleaseDate(date: Int) {
-        movie.releaseDate = date
+    fun updateReleaseDate(date: String?) {
+        movie.releaseDate = date?.toInt()
     }
 
     fun updateDescription(description: String) {
@@ -53,23 +58,39 @@ class EditMoviePresenter @Inject constructor(private val moviesInteractor: Movie
     }
 
     fun saveMovie() {
-        if (movie.id != null) {
-            moviesInteractor.addMovie(movie)
+        if (movie.id == null || movie.id == 0) {
+            executor.execute {
+                moviesInteractor.addMovie(movie)
+            }
         } else {
-            moviesInteractor.updateMovie(movie)
+            executor.execute {
+                moviesInteractor.updateMovie(movie)
+            }
         }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onAddMovieEventMainThread(event: AddMovieEvent) {
         Log.d("EVENT", "addMovieEvent")
-        screen?.showMovieSaved(movie)
+        if (event.code != 200) {
+            event.throwable?.printStackTrace()
+        } else {
+            screen?.showMovieSaved(movie)
+        }
+
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onEditMovieEvent(event: UpdateMovieEvent) {
-        Log.d("EVENT", "createMovieEvent")
-        screen?.showMovieSaved(movie)
+        Log.d("EVENT", "editMovieEvent")
+        if (event.code != 200) {
+            event.throwable?.printStackTrace()
+            Log.d("Code", event.code.toString())
+        }
+        else {
+            screen?.showMovieSaved(movie)
+        }
+
     }
 
 
